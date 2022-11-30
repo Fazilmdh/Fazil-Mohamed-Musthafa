@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Billing">
+    <Key>
+      <PropertyRef Name="B_ID" />
+    </Key>
+    <Property Name="B_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="P_ID" Type="Int32" Nullable="false" />
+    <Property Name="SelectedProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="C_ID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone" Type="Int32" Nullable="false" />
+    <Property Name="PaymentID" Type="Int32" Nullable="false" />
+    <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CustomerMaster" Relationship="Self.FK_Billing_CustomerMaster" FromRole="Billing" ToRole="CustomerMaster" />
+    <NavigationProperty Name="Paymenttype1" Relationship="Self.FK_Billing_Paymenttype" FromRole="Billing" ToRole="Paymenttype" />
+    <NavigationProperty Name="SoldProducts" Relationship="Self.FK_SoldProduct_Billing" FromRole="Billing" ToRole="SoldProduct" />
+    <NavigationProperty Name="ProductMaster" Relationship="SISModel.FK_Billing_ProductMaster" FromRole="Billing" ToRole="ProductMaster" />
+  </EntityType>
+  <EntityType Name="CustomerMaster">
+    <Key>
+      <PropertyRef Name="C_ID" />
+    </Key>
+    <Property Name="C_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Billings" Relationship="Self.FK_Billing_CustomerMaster" FromRole="CustomerMaster" ToRole="Billing" />
+  </EntityType>
+  <EntityType Name="EmployeeMaster">
+    <Key>
+      <PropertyRef Name="E_ID" />
+    </Key>
+    <Property Name="E_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Paymenttype">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentType1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Billings" Relationship="Self.FK_Billing_Paymenttype" FromRole="Paymenttype" ToRole="Billing" />
+  </EntityType>
+  <EntityType Name="ProductMaster">
+    <Key>
+      <PropertyRef Name="P_ID" />
+    </Key>
+    <Property Name="P_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="MaxQuantity" Type="Int32" />
+    <Property Name="Available" Type="Int32" />
+    <Property Name="S_ID" Type="Int32" />
+    <NavigationProperty Name="SoldProduct" Relationship="Self.FK_ProductMaster_SoldProduct" FromRole="ProductMaster" ToRole="SoldProduct" />
+    <NavigationProperty Name="Billings" Relationship="SISModel.FK_Billing_ProductMaster" FromRole="ProductMaster" ToRole="Billing" />
+  </EntityType>
+  <EntityType Name="SoldProduct">
+    <Key>
+      <PropertyRef Name="S_ID" />
+    </Key>
+    <Property Name="S_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="B_ID" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QuantitySold" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Billing" Relationship="Self.FK_SoldProduct_Billing" FromRole="SoldProduct" ToRole="Billing" />
+    <NavigationProperty Name="ProductMasters" Relationship="Self.FK_ProductMaster_SoldProduct" FromRole="SoldProduct" ToRole="ProductMaster" />
+  </EntityType>
+  <Association Name="FK_Billing_CustomerMaster">
+    <End Role="CustomerMaster" Type="Self.CustomerMaster" Multiplicity="1" />
+    <End Role="Billing" Type="Self.Billing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerMaster">
+        <PropertyRef Name="C_ID" />
+      </Principal>
+      <Dependent Role="Billing">
+        <PropertyRef Name="C_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Billing_Paymenttype">
+    <End Role="Paymenttype" Type="Self.Paymenttype" Multiplicity="1" />
+    <End Role="Billing" Type="Self.Billing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paymenttype">
+        <PropertyRef Name="PaymentID" />
+      </Principal>
+      <Dependent Role="Billing">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SoldProduct_Billing">
+    <End Role="Billing" Type="Self.Billing" Multiplicity="1" />
+    <End Role="SoldProduct" Type="Self.SoldProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Billing">
+        <PropertyRef Name="B_ID" />
+      </Principal>
+      <Dependent Role="SoldProduct">
+        <PropertyRef Name="B_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductMaster_SoldProduct">
+    <End Role="SoldProduct" Type="Self.SoldProduct" Multiplicity="0..1" />
+    <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SoldProduct">
+        <PropertyRef Name="S_ID" />
+      </Principal>
+      <Dependent Role="ProductMaster">
+        <PropertyRef Name="S_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SISEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Billings" EntityType="Self.Billing" />
+    <EntitySet Name="CustomerMasters" EntityType="Self.CustomerMaster" />
+    <EntitySet Name="EmployeeMasters" EntityType="Self.EmployeeMaster" />
+    <EntitySet Name="Paymenttypes" EntityType="Self.Paymenttype" />
+    <EntitySet Name="ProductMasters" EntityType="Self.ProductMaster" />
+    <EntitySet Name="SoldProducts" EntityType="Self.SoldProduct" />
+    <AssociationSet Name="FK_Billing_CustomerMaster" Association="Self.FK_Billing_CustomerMaster">
+      <End Role="CustomerMaster" EntitySet="CustomerMasters" />
+      <End Role="Billing" EntitySet="Billings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Billing_Paymenttype" Association="Self.FK_Billing_Paymenttype">
+      <End Role="Paymenttype" EntitySet="Paymenttypes" />
+      <End Role="Billing" EntitySet="Billings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SoldProduct_Billing" Association="Self.FK_SoldProduct_Billing">
+      <End Role="Billing" EntitySet="Billings" />
+      <End Role="SoldProduct" EntitySet="SoldProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductMaster_SoldProduct" Association="Self.FK_ProductMaster_SoldProduct">
+      <End Role="SoldProduct" EntitySet="SoldProducts" />
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Billing_ProductMaster" Association="SISModel.FK_Billing_ProductMaster">
+      <End Role="ProductMaster" EntitySet="ProductMasters" />
+      <End Role="Billing" EntitySet="Billings" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Billing_ProductMaster">
+    <End Type="SISModel.ProductMaster" Role="ProductMaster" Multiplicity="1" />
+    <End Type="SISModel.Billing" Role="Billing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductMaster">
+        <PropertyRef Name="P_ID" />
+      </Principal>
+      <Dependent Role="Billing">
+        <PropertyRef Name="P_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

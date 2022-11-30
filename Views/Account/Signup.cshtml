@@ -1,0 +1,66 @@
+﻿@model SIS.Models.EmployeeMaster
+
+@{
+    ViewBag.Title = "Signup";
+}
+
+<br />
+<br />
+<h2>Employee Registration</h2>
+
+
+<div class="form-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.E_ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffName)
+            @Html.EditorFor(model => model.StaffName)
+            @Html.ValidationMessageFor(model => model.StaffName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Age)
+            @Html.EditorFor(model => model.Age)
+            @Html.ValidationMessageFor(model => model.Age)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Position)
+            @Html.EditorFor(model => model.Position)
+            @Html.ValidationMessageFor(model => model.Position)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName)
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Signup" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+
+    }
+    <div>
+        @Html.ActionLink("Login Now", "Login")
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

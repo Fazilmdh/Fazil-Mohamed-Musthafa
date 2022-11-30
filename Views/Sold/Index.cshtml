@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SIS.Models.SoldProduct>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+
+<h2>Sold Report</h2>
+
+
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantitySold)
+            </th>
+
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantitySold)
+            </td>
+
+        </tr>
+    }
+
+
+
+
+</table>

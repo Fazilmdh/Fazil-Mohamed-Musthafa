@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SIS.Models.ProductMaster>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+
+<h2>Product Details</h2>
+
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Available)
+            </th>
+
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Available)
+            </td>
+
+        </tr>
+    }
+
+</table>

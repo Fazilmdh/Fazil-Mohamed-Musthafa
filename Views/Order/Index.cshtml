@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SIS.Models.Billing>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+
+<h2>Ordered Product</h2>
+
+<p>
+    <a href="@Url.Action("Create","Order")" class="btn btn-default"><i class="fa fa-plus"></i> Select Product</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SelectedProducts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phone)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentType)
+            </th>
+
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedProducts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType)
+            </td>
+
+        </tr>
+    }
+
+</table>

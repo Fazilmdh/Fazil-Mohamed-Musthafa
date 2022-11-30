@@ -1,0 +1,69 @@
+﻿@model SIS.Models.Billing
+
+@{
+    ViewBag.Title = "Create";
+}
+<br />
+<br />
+
+<div class="form-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.B_ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedProducts)
+            @Html.DropDownListFor(model => model.SelectedProducts, new SelectList(ViewBag.list1), "Select your Product", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SelectedProducts)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity)
+            @Html.EditorFor(model => model.Quantity)
+            @Html.ValidationMessageFor(model => model.Quantity)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price)
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName)
+            @Html.DropDownListFor(model => model.CustomerName, new SelectList(ViewBag.list2), "Select your Name", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CustomerName)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.phone)
+            @Html.EditorFor(model => model.phone)
+            @Html.ValidationMessageFor(model => model.phone)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentType)
+            @Html.DropDownListFor(model => model.PaymentType, new SelectList(ViewBag.list3), "Select your Payment Mode", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PaymentType)
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Buy" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+    }
+
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+}
+
